@@ -1,0 +1,77 @@
+function calculateTax(income) {
+    // Assuming a simple tax rate for illustration purposes
+    let taxRate;
+    if (income <= 288000) {
+        taxRate = 0.1
+    }else if (income <= 388000) {
+        taxRate = 0.25
+    }else {
+        taxRate = 0.3
+    }
+
+    const tax = income * taxRate;
+    return tax;
+}
+
+function calculateNHIFDeduction(salary) {
+    // Assuming a fixed NHIF rate for illustration purposes
+    let nhifRate = 1700
+    const nhifDeduction = salary * nhifRate;
+    return nhifDeduction;
+}
+
+function calculateNssFDeduction(salary) {
+    // Assuming a fixed NSSF rate for illustration purposes
+    const nssfRate = 400;
+    const nssfDeduction = salary * nssfRate;
+    return nssfDeduction;
+}
+
+function calculateNetSalary(basicSalary, benefits) {
+    // Calculate gross salary
+    const grossSalary = basicSalary + benefits;
+
+    // Calculate tax
+    const tax = calculateTax(grossSalary);
+
+    // Calculate NHIF deduction
+    const nhifDeduction = calculateNHIFDeduction(grossSalary);
+
+    // Calculate NSSF deduction
+    const nssfDeduction = calculateNssFDeduction(grossSalary);
+
+    // Calculate net salary
+    const netSalary = grossSalary - tax - nhifDeduction - nssfDeduction;
+
+    return {
+        grossSalary,
+        tax,
+        nhifDeduction,
+        nssfDeduction,
+        netSalary,
+    };
+}
+
+function main() {
+    // Get user input for basic salary and benefits
+    const basicSalary = parseFloat(prompt("Enter basic salary:"));
+    const benefits = parseFloat(prompt("Enter benefits:"));
+
+    // Calculate and display the results
+    const {
+        grossSalary,
+        tax,
+        nhifDeduction,
+        nssfDeduction,
+        netSalary,
+    } = calculateNetSalary(basicSalary, benefits);
+
+    console.log("\nSalary Details:");
+    console.log(`Basic Salary: ${basicSalary}`);
+    console.log(`Benefits: ${benefits}`);
+    console.log(`Gross Salary: ${grossSalary}`);
+    console.log(`Tax (Payee): ${tax}`);
+    console.log(`NHIF Deduction: ${nhifDeduction}`);
+    console.log(`NSSF Deduction: ${nssfDeduction}`);
+    console.log(`Net Salary: ${netSalary}`);
+}
